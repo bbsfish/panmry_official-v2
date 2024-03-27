@@ -1,0 +1,122 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <!-- <meta name="description" content="" /> -->
+        <meta name="viewport" content="width=device-width" />
+        <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+    </head>
+    <body>
+        <header><Header></Header></header>
+        <main><slot /></main>
+        <footer><Footer></Footer></footer>
+    </body>
+</html>
+
+<style is:global type="scss">
+    @use "../styles/vars.scss" as vars;
+    @import url(http://fonts.googleapis.com/css?family=Dancing+Script:700);
+    @import url(https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap);
+    @import url("https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap");
+
+    :root {
+        --lightgray: rgb(94, 94, 94);
+        --lightblack: rgb(40, 40, 40);
+        --darkblack: #222;
+        --white: aliceblue;
+        --h-base-color: rgb(119, 119, 119);
+        --h-nav-list-active: rgb(254, 1, 92);
+        --h-nav-bg: rgb(40, 40, 40);
+        --m-header-main: rgb(162, 162, 162);
+        --m-tmlist-pg-active: rgb(96, 96, 96);
+        --m-bgcolor-1: #222;
+        --base-white: aliceblue;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: content-box;
+        font-size: 16px;
+    }
+
+    li {
+        text-decoration: none;
+        list-style-type: none;
+    }
+
+    a {
+        text-decoration: none;
+        list-style-type: none;
+        color: white;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    p,
+    time,
+    li {
+        color: vars.$fc("dark");
+        margin: 0;
+        padding: 0;
+    }
+
+    button {
+        /* button reset */
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        outline: none;
+        padding: 0;
+        appearance: none;
+    }
+
+    body {
+        width: 100%;
+        font-family: "Ubuntu Condensed", sans-serif, cursive;
+        background-color: rgb(40, 40, 40);
+    }
+
+    .wrap {
+        overflow: hidden;
+    }
+
+    img {
+        width: 150px;
+    }
+
+    main {
+        min-height: 90vh;
+    }
+
+    /* スクロールバー */
+    ::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+    ::-webkit-scrollbar-track {
+        background: rgb(94, 94, 94);
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: aliceblue;
+        border-radius: 10px;
+    }
+</style>

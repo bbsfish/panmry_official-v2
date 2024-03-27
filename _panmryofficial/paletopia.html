@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/header.css" type="text/css" />
+  <link rel="stylesheet" href="./css/format.css" type="text/css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <script src="./js/main.js"></script>
+  <link rel="icon" href="favicon.png">
+  <title>Paletopia | 鋭意開発中ゲーム</title>
+  <meta name="description" content="鋭意開発中のインディーズゲーム">
+  <meta name="keywords" content="gameplay,indiegame,conceptart,indiegame,gameplay,conceptart">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+</head>
+
+<body id="for-paletopia">
+  <header id="body-header"></header>
+  <main>
+    <section class="m-sections" id="keyvisual">
+      <h2>Paletopia</h2>
+      <hr>
+      <img src="./assets/paletopia/keyvisual.jpg">
+    </section>
+    <section class="m-sections" id="movies">
+      <h2>Movies</h2>
+      <hr>
+      <div class="iframe-video">
+        <iframe width="640" height="360" src="https://www.youtube.com/embed/rcwdNF838vQ" title="『Paletopia』 ゲーム紹介動画"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+    </section>
+    <section class="m-sections" id="news">
+      <h2>News</h2>
+      <hr>
+      <ol>
+        <li><time>2023.09.12</time><span>ホームページ開設</span></li>
+        <li><time>2002.03.27</time><span>熊谷颯馬誕生</span></li>
+      </ol>
+    </section>
+    <section class="m-sections" id="conceptarts">
+      <h2>Concept Arts</h2>
+      <hr>
+      <div class="gallery">
+        <img src="./assets/paletopia/ca1.jpg">
+        <img src="./assets/paletopia/ca2.jpg">
+        <img src="./assets/paletopia/ca3.jpg">
+      </div>
+    </section>
+    <section class="m-sections" id="goods">
+      <h2>Goods</h2>
+      <hr>
+      <a href="https://mikorush.theshop.jp/" target="_blank" class="linkbox">
+        <p class="linkbox-title">FF3E00 Powered by BASE</p>
+        <p class="linkbox-description">アートワークの販売</p>
+        <img src="./assets/paletopia/baseicon.jpg">
+      </a>
+    </section>
+    <section class="m-sections" id="members">
+      <h2>Members</h2>
+      <hr>
+      <ul class="windows">
+        <li>
+          <p>監督総指揮</p>
+          <p>沖田陽南人</p>
+          <img src="./assets/paletopia/icon1.png">
+        </li>
+        <li>
+          <p>ゲームプランナー</p>
+          <p>熊谷颯馬</p>
+          <img src="./assets/paletopia/icon1.png">
+        </li>
+        <li>
+          <p>アートディレクター</p>
+          <p>山田泰嵩</p>
+          <img src="./assets/paletopia/icon1.png">
+        </li>
+      </ul>
+    </section>
+    <section class="m-sections" id="sns">
+      <h2>SNS</h2>
+      <hr>
+      <!-- <ul class="follow-me">
+        <li><a href="https://twitter.com/MIKORUSH2001" id="twttr"></a></li>
+        <li><a href="https://www.instagram.com/mkrs.2001/" id="insta"></a></li>
+      </ul> -->
+      <ul class="snsbtniti2">
+        <li><a href="https://twitter.com/MIKORUSH2001" class="flowbtn18 fl_tw2"><i class="fab fa-twitter"></i>
+            <div>Twitter</div>
+          </a></li>
+        <li><a href="https://www.instagram.com/mkrs.2001/" class="flowbtn18 insta_btn2"><i class="fab fa-instagram"></i>
+            <div>Instagram</div>
+          </a></li>
+      </ul>
+    </section>
+  </main>
+  <footer id="body-footer"></footer>
+</body>
+
+<style>
+  /* COMMON */
+  body {
+    background-color: var(--darkblack);
+  }
+
+  section {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+
+  section:last-child {
+    margin-bottom: 80px;
+  }
+
+  h2 {
+    text-align: left;
+    font-size: 1.3rem;
+    padding: 15px 0;
+  }
+
+  hr {
+    width: 100% !important;
+    max-width: unset;
+  }
+
+  /* Keyvisual */
+  section#keyvisual {
+    width: calc(100vw - calc(100vw - 100%));
+    text-align: center;
+    height: max-content;
+  }
+
+  section#keyvisual img {
+    width: 100%;
+    max-width: 900px;
+    height: auto;
+  }
+
+  section#keyvisual h2,
+  section#keyvisual hr {
+    width: 80% !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Video */
+  div.iframe-video {
+    aspect-ratio: 16 / 9;
+    text-align: center;
+  }
+
+  div.iframe-video iframe {
+    width: 100%;
+    max-width: 900px;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* News */
+  section#news ol li {
+    display: block;
+  }
+
+  section#news span {
+    color: var(--white);
+    margin-left: 1rem;
+  }
+
+  /* Concept Arts */
+  div.gallery {
+    display: flex;
+    justify-content: space-between;
+    overflow-x: scroll;
+    padding: 0 5px;
+    scrollbar-width: 5px;
+  }
+
+  div.gallery img {
+    width: 30%;
+    min-width: 200px;
+    max-width: 500px;
+    margin: 0 15px 15px 15px;
+  }
+
+
+  /* Goods */
+  a.linkbox {
+    border: 1px solid var(--white);
+    border-radius: 4px;
+    padding: 10px 15px;
+    display: block;
+    position: relative;
+    min-height: calc(100px - 20px);
+  }
+
+  a.linkbox p:first-child {
+    margin-bottom: .6rem;
+    display: block;
+    width: calc(100% - 100px);
+  }
+
+  a.linkbox p:nth-child(2) {
+    color: var(--lightgray);
+    font-weight: bold;
+    font-size: .9rem;
+    display: block;
+    width: calc(100% - 100px);
+  }
+
+  a.linkbox img {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 0;
+    right: 0;
+    border-radius: 4px;
+  }
+
+  a.linkbox:hover {
+    border: 1px solid var(--lightgray);
+    color: var(--lightgray);
+    transition: .3s;
+  }
+
+  /* Members */
+  ul.windows {
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  ul.windows li {
+    width: 130px;
+    text-align: center;
+    display: inline-block;
+  }
+
+  ul.windows p:first-child {
+    display: block;
+    width: 100%;
+    font-size: .65rem;
+    word-break: keep-all;
+  }
+
+  ul.windows p:nth-child(2) {
+    display: block;
+    width: 100%;
+    font-size: .9rem;
+  }
+
+  ul.windows li img {
+    width: 100px;
+  }
+</style>
+<style>
+   /* SNS follow icon */
+   a.flowbtn18 {
+    display: inline-block;
+    width: 90%;
+    height: 50px;
+    border-radius: 4px;
+    background-color: #444;
+    color: #fff !important;
+    position: relative;
+  }
+
+  .flowbtn18 i {
+    font-size: 20px;
+    width: 100%;
+    height: 50%;
+  }
+  .flowbtn18 i::before {
+    position: relative;
+    top: 4px;
+  }
+
+  .flowbtn18 div {
+    font-size: 1.1rem;
+    display: inline-block;
+    position: relative;
+    top: 4px;
+  }
+
+  /* Twitterマウスホバー時 */
+  .flowbtn18.fl_tw2:hover {
+    background: linear-gradient(135deg, #13f1fc 0%, #0470dc 100%);
+  }
+
+  /* Instagramマウスホバー時 */
+  .flowbtn18.insta_btn2:hover {
+    background: -webkit-linear-gradient(135deg, #427eff 0%, #f13f79 70%) no-repeat;
+    background: linear-gradient(135deg, #427eff 0%, #f13f79 70%) no-repeat;
+  }
+
+  /* Facebookマウスホバー時 */
+  .flowbtn18.fl_fb2:hover {
+    background: -webkit-linear-gradient(top, #5c80c6 0%, #34528c 74%);
+    background: linear-gradient(to bottom, #5c80c6 0%, #34528c 74%);
+  }
+
+  /* Feedlyマウスホバー時 */
+  .flowbtn18.fl_fd2:hover {
+    background: linear-gradient(135deg, #b1ea4d 0%, #459522 100%);
+    font-size: 28px;
+  }
+
+  /* Pocketマウスホバー時 */
+  .flowbtn18.fl_pk2:hover {
+    background: linear-gradient(135deg, #f36265 0%, #dd4f68 100%);
+  }
+
+  .flowbtn18.fl_hb2 {
+    font-size: 25px;
+  }
+
+  /* はてブマウスホバー時 */
+  .flowbtn18.fl_hb2:hover {
+    background: -webkit-linear-gradient(top, #1fbccd 0%, #1c91d4 84%);
+    background: linear-gradient(to bottom, #1fbccd 0%, #1c91d4 84%);
+  }
+
+  /* YouTubeマウスホバー時 */
+  .flowbtn18.fl_yu2:hover {
+    background: linear-gradient(135deg, #f5515f 0%, #c9293c 100%);
+  }
+
+  /* LINEマウスホバー時 */
+  .flowbtn18.fl_li2:hover {
+    background: linear-gradient(135deg, #3a9278 0%, #00c300 100%);
+  }
+
+  /* お問い合わせマウスホバー時 */
+  .flowbtn18.fl_ma2:hover {
+    background: linear-gradient(135deg, #fad961 0%, #f76b1c 100%);
+  }
+
+  /* プロフィールマウスホバー時 */
+  .flowbtn18.fl_pf2:hover {
+    background: linear-gradient(135deg, #fad961 0%, #f8a33f 100%);
+  }
+
+  /* ulタグの内側余白を０にする */
+  ul.snsbtniti2 {
+    padding: 0 !important;
+  }
+
+  /* アイコンボタンの位置調整 */
+  .snsbtniti2 {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  /* アイコンボタン同士の余白調整 */
+  .snsbtniti2 li {
+    justify-content: space-between;
+    width: 50%;
+    max-width: 200px;
+    text-align: center !important;
+  }
+</style>
+
+</html>

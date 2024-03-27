@@ -1,0 +1,125 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="PANMry Works Official Homepage">
+	
+</Layout>
+
+<style>
+	.m-header {
+		background-image: url("./assets/wallpaper.jpeg");
+		background-position: center;
+		text-align: center;
+		background-size: cover;
+		width: 100%;
+		height: 100vh;
+		-webkit-background-size: cover;
+		background-size: cover;
+		-o-background-size: cover;
+	}
+
+	.m-header h1 {
+		width: 100%;
+		text-align: center;
+		font-size: 36px;
+		font-weight: 300;
+		color: rgba(255, 255, 255, 0.7);
+		padding-top: calc(50vh - 100px);
+		padding-bottom: 60px;
+		font-family: "Dela Gothic One", cursive;
+	}
+
+	.m-header a {
+		font-size: 24px;
+		padding: 10px 20px;
+		border: 1px solid black;
+		color: black;
+		border-radius: 30px;
+		font-weight: 200;
+	}
+
+	.m-header a:hover {
+		color: white;
+		border: 1px solid white;
+		transition-timing-function: ease-in;
+		transition-duration: 0.2s;
+	}
+
+	/* section */
+	section {
+		background-color: var(--m-bgcolor-1);
+	}
+
+	.m-sections h2 {
+		width: 100%;
+		text-align: center;
+		font-size: 30px;
+		padding: 15px 0px;
+		color: var(--h-nav-list-active);
+	}
+
+	.description {
+		text-align: center;
+		font-size: 18px;
+		padding: 15px 0px;
+		color: rgb(177, 177, 177);
+	}
+
+	/* highlights img-list */
+	.img-list {
+		display: inline-block;
+		height: 320px;
+		width: 100%;
+		white-space: nowrap;
+		overflow: scroll;
+		text-align: center;
+		overflow-y: scroll;
+		-ms-overflow-style: none;
+		/* IE, Edge 対応 */
+		scrollbar-width: none;
+		/* Firefox 対応 */
+	}
+
+	.img-list::-webkit-scrollbar {
+		/* Chrome, Safari 対応 */
+		display: none;
+	}
+
+	.img-list:hover {
+		-ms-overflow-style: auto;
+		/* IE, Edge 対応 */
+		scrollbar-width: auto;
+		/* Firefox 対応 */
+	}
+
+	.img-list::-webkit-scrollbar:hover {
+		/* Chrome, Safari 対応 */
+		display: auto;
+	}
+
+	.img-list a {
+		display: inline-block;
+		height: 280px;
+		width: 160px;
+		text-align: center;
+		margin: 5px 5px;
+	}
+
+	.img-list p {
+		display: block;
+		height: 40px;
+		width: 150px;
+		padding: 0;
+		margin: 0 auto;
+		word-break: break-all;
+		overflow-wrap: break-word;
+		text-align: center;
+	}
+
+	.img-list img {
+		width: 150px;
+		height: 190px;
+		margin: 0 auto;
+	}
+</style>

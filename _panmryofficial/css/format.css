@@ -1,0 +1,180 @@
+@import url(http://fonts.googleapis.com/css?family=Dancing+Script:700);
+@import url(https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap);
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap');
+
+:root {
+  --lightgray: rgb(94, 94, 94);
+  --lightblack: rgb(40, 40, 40);
+  --darkblack: #222;
+  --white: aliceblue;
+    --h-base-color: rgb(119, 119, 119);
+    --h-nav-list-active: rgb(254, 1, 92);
+    --h-nav-bg: rgb(40, 40, 40);
+    --m-header-main: rgb(162, 162, 162);
+    --m-tmlist-pg-active: rgb(96, 96, 96);
+    --m-bgcolor-1: #222;
+    --base-white: aliceblue;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: content-box;
+  font-size: 16px;
+  /* outline: 2px solid red; */
+}
+
+li {
+  text-decoration: none;
+  list-style-type:none;
+}
+
+a {
+  text-decoration: none;
+  list-style-type:none;
+  color: white;
+}
+
+h1,h2,h3,h4,h5,p,time,li {
+  color: var(--white);
+  margin: 0;
+  padding: 0;
+}
+
+button{
+  /* button reset */
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
+}
+
+
+body {
+  width: 100%;
+  font-family: 'Ubuntu Condensed', sans-serif, cursive;
+  background-color: var(--lightblack);
+}
+
+.wrap {
+  overflow: hidden;
+}
+
+img {
+  width: 150px;
+}
+
+main {
+  min-height: 90vh;
+  background-color: var(--darkblack);
+}
+
+/* スクロールバー */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--lightgray);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--white);
+  border-radius: 10px;
+}
+
+/* footer */
+footer {
+  background-color: var(--darkblack);
+}
+
+div.footer-nav {
+  min-height: 110px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  max-width: 800px;
+}
+
+div.footer-nav nav.f-nav-list {
+  display: block;
+  width: 150px;
+}
+
+footer h4 {
+  border-bottom: var(--base-white) solid 1px;
+  font-size: 20px;
+  color: var(--h-nav-list-active);
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+div.f-nav-list-main {
+  min-width: 260px;
+}
+
+@media screen and (min-width: 769px) {
+  div.footer-nav {
+    justify-content: flex-start;
+  }
+  div.footer-nav nav.f-nav-list {
+    width: 300px;
+    margin: 0 15px;
+  }
+}
+
+/* follow btn */
+.follow-me {
+  margin: 0 0 -8px;
+  overflow: hidden;
+  padding: 0;
+}
+.follow-me li {
+  float: left;
+  margin: 0 8px 8px 0;
+  padding: 0;
+}
+.follow-me li a::before {
+  background-color: #eee;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  color: #333;
+  display: inline-block;
+  font-family: 'FontAwesome';
+  font-size: 16px;
+  height: 44px; /* Button height */
+  line-height: 44px; /* Button height */
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  text-align: center;
+  width: 44px; /* Button width */
+}
+.follow-me li a:hover::before {
+  color: #fff;
+  background-color: rgb(83, 83, 83);
+}
+.follow-me li a[href*="twitter.com"]::before { content: "\f099"; }
+.follow-me li a[href*="instagram.com"]::before { content: "\f16d"; }
+
+/* hr */
+hr {
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  max-width: 120px;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.sub-hr {
+  border: 0;
+  height: 0;
+  border-top: 1px dashed rgba(0, 0, 0, 0.1);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+  max-width: 100px;
+  margin: auto;
+  margin-bottom: 20px;
+}
