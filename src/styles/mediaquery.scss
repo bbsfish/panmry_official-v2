@@ -1,0 +1,12 @@
+// Breakpoints
+$breakpoints: (
+    mb: "screen and (max-width: 768px)",
+    pc: "screen and (min-width: 769px)",
+) !default;
+
+// Media Queryの設定
+@mixin break($breakpoint) {
+    @media #{map-get($breakpoints, $breakpoint)} {
+        @content;
+    }
+}

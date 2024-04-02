@@ -1,322 +1,137 @@
 ---
+import Logo from "./header-parts/Logo.astro";
+import BargerButton from "./header-parts/BargerButton.astro";
 ---
 
 <div class="header">
-	<h1 class="h-logo">
-		<a href="./index.html"><span>PANMry</span><span>Works</span></a>
-	</h1>
-	<nav class="h-nav-list h-nav-list-main">
-		<ul>
-			<!-- <a> class="h-nav-list-active" 付与でハイライト -->
-			<li class="h-nav-list-item">
-				<a href="./index.html#intro" class="h-link-pc for-index"
-					>intro</a
-				>
-			</li>
-			<li class="h-nav-list-item">
-				<a href="./index.html#highlights" class="h-link-pc for-indexn"
-					>highlights</a
-				>
-			</li>
-			<li class="h-nav-list-item">
-				<a href="./works.html" class="h-link-pc for-works">works</a>
-			</li>
-			<li class="h-nav-list-item">
-				<a href="./paletopia.html" class="h-link-pc for-paletopia"
-					>paletopia</a
-				>
-			</li>
-		</ul>
-	</nav>
-	<nav class="h-nav-list h-nav-list-sub">
-		<ul>
-			<li class="h-nav-list-item for-about">
-				<a href="./about.html">about</a>
-			</li>
-		</ul>
-	</nav>
-	<!-- barger menu -->
-	<div class="barger-menu">
-		<!-- barger btn -->
-		<label
-			for="barger-menu-list"
-			class="barger-menu-btn"
-			id="barger-menu-btn"><span></span></label
-		>
-		<!-- barger list -->
-		<div class="barger-menu-list" id="barger-menu-list">
+	<Logo></Logo>
+	<div class="menu" id="header-menu">
+		<nav id="menu-main">
 			<ul>
-				<!-- <a> class="h-nav-list-active" 付与でハイライト -->
-				<li class="h-nav-list-item">
-					<a href="./index.html#intro" class="h-link-sp for-index"
-						>intro</a
-					>
-				</li>
-				<li class="h-nav-list-item">
-					<a
-						href="./index.html#highlights"
-						class="h-link-sp for-indexn">highlights</a
-					>
-				</li>
-				<li class="h-nav-list-item">
-					<a href="./works.html" class="h-link-sp for-works">works</a>
-				</li>
-				<li class="h-nav-list-item">
-					<a href="./paletopia.html" class="h-link-sp for-paletopia"
-						>paletopia</a
-					>
-				</li>
-				<li class="h-nav-list-item">
-					<a href="./about.html" class="h-link-sp for-about">about</a>
-				</li>
+			  <!-- <a> class="h-nav-list-active" 付与でハイライト -->
+			  <li><a href="./index.html#intro" class="active">intro</a></li>
+			  <li><a href="./index.html#highlights">highlights</a></li>
+			  <li><a href="./works.html">works</a></li>
+			  <li><a href="./paletopia.html">paletopia</a></li>
 			</ul>
-		</div>
+		</nav>
+		<nav id="menu-sub">
+			<ul>
+			  <li><a href="./about.html">about</a></li>
+			</ul>
+		</nav>
 	</div>
+	<BargerButton></BargerButton>
 </div>
 
-<style type="scss">
-    @use "../styles/vars.scss" as vars;
+<style lang="scss">
+    @use "@/styles/mediaquery" as mq;
+
+	.header {
+		--header-h: 50px;
+		--logo-w: 105px;
+		--barger-menu-bgc: var(--distinction);
+	}
 
 	.header {
 		width: 100%;
-		height: 50px;
-		text-align: center;
-		color: vars.$fc("light");
+		height: var(--header-h);
+		z-index: 1000;
+		position: relative;
+		background-color: var(--distinction);
 	}
 
-	@media screen and (max-width: 768px) {
-		.header-nav {
-			width: 100%;
-			height: 50px;
-			background-color: rgb(40, 40, 40);
-			position: fixed;
-			transition: 0.4s ease;
-		}
+	@include mq.break(mb) {
+		.header {
+			.menu {
+				padding: 0 2rem;
+				position: absolute;
+				z-index: 10;
+				top: -250px;
+				background-color: var(--distinction);
+				width: calc(100% - (2rem * 2)); // {BargerButton の Width} を引く
+				transition: all var(--trs-duration);
 
-		.h-nav-list-active {
-			color: rgb(254, 1, 92) !important;
-			font-size: 18px !important;
-		}
+				&.panelactive {
+					top: var(--header-h);
+				}
 
-		.m-header-hidden {
-			height: 50px !important;
-		}
+				nav {
+					&:last-child {
+						margin-top: 1rem;
+					}
 
-		/* header logo */
-		.h-logo {
-			width: 100vw;
-			height: 50px;
-			background-color: rgb(40, 40, 40);
-			position: absolute;
-			z-index: 5000;
-		}
-
-		.h-logo a {
-			font-family: "Questrial", "Helvetica Neue", Arial, sans-serif;
-			display: block;
-			width: 105px;
-			height: 50px;
-			color: rgb(254, 1, 92);
-			position: relative;
-		}
-
-		.h-logo a span:first-child {
-			position: absolute;
-			left: 7px;
-			top: 7px;
-			font-size: 25px;
-		}
-
-		.h-logo a span:last-child {
-			position: absolute;
-			left: 29px;
-			top: 24.5px;
-			font-size: 19px;
-		}
-
-		/* header nav */
-		.h-nav-list {
-			display: none;
-		}
-
-		/* header humberger */
-		/* barger menu content */
-		.barger-menu {
-			position: relative;
-		}
-
-		#barger-menu-list {
-			position: absolute;
-			z-index: 1000;
-			top: -250px;
-			border-top: 1px solid var(--base-white);
-			background-color: var(--h-nav-bg);
-			width: 100%;
-			transition: all 0.6s;
-		}
-
-		#barger-menu-list.panelactive {
-			top: 50px;
-		}
-
-		#barger-menu-list ul li,
-		#barger-menu-list ul li a {
-			font-family: "Questrial", "Helvetica Neue", Arial, sans-serif;
-			text-transform: uppercase;
-			line-height: 40px;
-			display: block;
-			height: 40px;
-			text-align: left;
-			margin-left: 10px;
-			font-size: 14px;
-		}
-
-		#barger-menu-list ul li:last-child {
-			margin-top: 20px;
-		}
-
-		/* barger menu btn */
-		#barger-menu-btn {
-			position: fixed;
-			z-index: 6000;
-			top: 4px;
-			right: 10px;
-			display: flex;
-			height: 40px;
-			width: 40px;
-			justify-content: center;
-			align-items: center;
-			background-color: rgba(0, 0, 0, 0.2);
-			transition: 0.5s ease;
-		}
-
-		#barger-menu-btn span,
-		#barger-menu-btn span:before,
-		#barger-menu-btn span:after {
-			position: fixed;
-			content: "";
-			display: block;
-			height: 4px;
-			width: 25px;
-			border-radius: 3px;
-			background-color: var(--base-white);
-			position: absolute;
-		}
-
-		#barger-menu-btn span:before {
-			bottom: 8px;
-		}
-
-		#barger-menu-btn span:after {
-			top: 8px;
+					ul {
+						li {
+							margin: 6px 0;
+							a {
+								text-transform: uppercase;
+								font-size: 1.2rem;
+								
+								&.active {
+									color: var(--accent);
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
-	/* 
- * FOR - PC (DESKTOP)
- * 画面幅が769px以上の場合に適用されるスタイル
-*/
-
-	@media screen and (min-width: 769px) {
-		.header-nav {
-			width: 100%;
-			height: 50px;
-			background-color: var(--h-nav-bg);
-			display: flex;
-			transition: 0.9s ease;
-		}
-
-		.header-body {
-			width: 100%;
-		}
-
-		/* header logo */
-		.h-logo {
-			width: 105px;
-			height: 50px;
-		}
-
-		.h-logo a {
-			font-family: "Questrial", "Helvetica Neue", Arial, sans-serif;
-			display: block;
-			width: 105px;
-			height: 50px;
-			color: var(--h-nav-list-active);
+	// PC
+	@include mq.break(pc) {
+		.header {
+			height: var(--header-h);
+			color: var(--white);
 			position: relative;
-		}
 
-		.h-logo a span:first-child {
-			position: absolute;
-			left: 7px;
-			top: 7px;
-			font-size: 25px;
-		}
+			.menu {
+				height: 100%;
+				width: calc(100% - var(--logo-w));
+				position: absolute;
+				left: var(--logo-w);
 
-		.h-logo a span:last-child {
-			position: absolute;
-			left: 29px;
-			top: 24.5px;
-			font-size: 19px;
-		}
+				nav {
+					display: inline-block;
+					position: absolute;
 
-		/* header nav */
+					ul {
+						li {
+							display: inline-block;
+							margin-left: 10px;
 
-		nav.h-nav-list ul li {
-			display: inline-block;
-			height: 50px;
-		}
+							&:last-child {
+								margin-right: 10px;
+							}
 
-		li.h-nav-list-item {
-			height: 50px;
-			text-align: center;
-			line-height: 49px;
-			text-transform: uppercase;
-			padding: 0 15px;
-		}
+							a {
+								text-transform: uppercase;
+								vertical-align: middle;
+								line-height: 50px;
+								font-size: 1.2rem;
 
-		li.h-nav-list-item a {
-			display: block;
-			color: var(--base-white);
-			height: 100%;
-			font-size: 17px;
-		}
+								&:hover {
+									transition: var(--trs-duration);
+									color: var(--white-2);
+								}
+								
+								&.active {
+									color: var(--accent);
+								}
+							}
+						}
+					}
 
-		li.h-nav-list-item a:hover {
-			color: var(--h-nav-list-active) !important;
-			/* transition-delay: 0.3s; */
-			transition-timing-function: ease-in;
-			transition-duration: 0.2s;
-		}
+					&#menu-main {
+						left: 0;
+					}
 
-		li.h-nav-list-item a:active {
-			color: var(--h-nav-list-active) !important;
-			/* transition-delay: 0.3s; */
-			transition-timing-function: ease-in;
-			transition-duration: 0.2s;
-		}
-
-		nav.h-nav-list-main {
-			min-width: 270px;
-		}
-
-		.h-nav-list-sub {
-			width: 90px;
-			height: 50px;
-			margin-left: auto;
-		}
-
-		.h-nav-list:last-child {
-			margin-left: auto;
-		}
-
-		.h-nav-list-active {
-			color: var(--h-nav-list-active) !important;
-			font-size: 1.2em !important;
-		}
-
-		/* header humberger */
-		.barger-menu {
-			display: none;
+					&#menu-sub {
+						right: 0;
+					}
+				}
+			}
 		}
 	}
 </style>

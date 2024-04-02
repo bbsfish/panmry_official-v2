@@ -2,55 +2,76 @@
 ---
 
 <div class="footer">
-    <nav class="f-nav-list f-nav-list-main">
-        <h4>About</h4>
-        <ul>
-            <li><a rel="nofollow" href="./about.html#developpers">Contuct us</a></li>
-        </ul>
-    </nav>
-    <nav class="f-nav-list f-nav-list-sub">
-        <h4>Follow</h4>
-        <ul class="follow-me">
-            <li><a href="https://twitter.com/PANMry_official" id="twttr"></a></li>
-            <li><a href="https://www.instagram.com/panmry__/" id="insta"></a></li>
-            <li><a href="https://www.youtube.com/"></a></li>
-        </ul>
-    </nav>
+	<div id="menu">
+		<nav>
+			<h4>About</h4>
+			<ul>
+				<li><a rel="nofollow" href="./about.html#developpers">Contuct us</a></li>
+			</ul>
+		</nav>
+		<nav>
+			<h4>Follow</h4>
+			<ul class="follow-me">
+				<li><a href="https://twitter.com/PANMry_official" id="twttr"></a></li>
+				<li><a href="https://www.instagram.com/panmry__/" id="insta"></a></li>
+				<li><a href="https://www.youtube.com/"></a></li>
+			</ul>
+		</nav>
+	</div>
+	<div id="copyright">
+		&copy;2022 PANMry Official HP Production.
+	</div>
 </div>
 
-<style type="scss">
+<style lang="scss">
+	@use "@/styles/mediaquery" as mq;
+
 	.footer {
-		@media screen and (min-width: 769px) {
-		div.footer-nav {
-			justify-content: flex-start;
+		background-color: var(--distinction);
+		width: 100%;
+		
+		* {
+			color: var(--white);
 		}
-		div.footer-nav nav.f-nav-list {
-			width: 300px;
-			margin: 0 15px;
+
+		a:hover {
+			text-decoration: underline;
+		}
+
+		& > div {
+			@include mq.break(pc) {
+				width: 90vw;
+			}
+			max-width: var(--screen-max-width);
+			margin-left: auto;
+			margin-right: auto;
+			padding-top: 12px;
+
+			&:last-child {
+				padding-bottom: 12px;
+			}
 		}
 	}
-		min-height: 110px;
+
+	
+	#copyright {
+		text-align: center;
+	}
+
+	#menu {
 		display: flex;
-		justify-content: space-between;
 		padding: 10px;
-		background-color: var(--darkblack);
-		max-width: 800px;
 
-		.f-nav-list {
-			display: block;
+		nav {
+			display: inline-block;
 			width: 150px;
-		}
 
-		h4 {
-			border-bottom: var(--base-white) solid 1px;
-			font-size: 20px;
-			color: var(--h-nav-list-active);
-			margin-bottom: 10px;
-			width: 100%;
-		}
-
-		.f-nav-list-main {
-			min-width: 260px;
+			h4 {
+				font-size: 20px;
+				color: var(--accent);
+				margin-bottom: 10px;
+				width: 100%;
+			}
 		}
 	}
 
@@ -59,35 +80,42 @@
 		margin: 0 0 -8px;
 		overflow: hidden;
 		padding: 0;
-	}
-	.follow-me li {
-		float: left;
-		margin: 0 8px 8px 0;
-		padding: 0;
-	}
-	.follow-me li a::before {
-		background-color: #eee;
-		-webkit-border-radius: 2px;
-		border-radius: 2px;
-		color: #333;
-		display: inline-block;
-		font-family: "FontAwesome";
-		font-size: 16px;
-		height: 44px; /* Button height */
-		line-height: 44px; /* Button height */
-		-webkit-transition: all 0.3s ease;
-		transition: all 0.3s ease;
-		text-align: center;
-		width: 44px; /* Button width */
-	}
-	.follow-me li a:hover::before {
-		color: #fff;
-		background-color: rgb(83, 83, 83);
-	}
-	.follow-me li a[href*="twitter.com"]::before {
-		content: "\f099";
-	}
-	.follow-me li a[href*="instagram.com"]::before {
-		content: "\f16d";
+
+		li {
+			float: left;
+			margin: 0 8px 8px 0;
+			padding: 0;
+
+			a {
+				&::before {
+					background-color: #eee;
+					-webkit-border-radius: 2px;
+					border-radius: 2px;
+					color: #333;
+					display: inline-block;
+					font-family: "FontAwesome";
+					font-size: 16px;
+					height: 44px; /* Button height */
+					line-height: 44px; /* Button height */
+					-webkit-transition: all 0.3s ease;
+					transition: all 0.3s ease;
+					text-align: center;
+					width: 44px; /* Button width */
+				}
+
+				&:hover::before {
+					color: #fff;
+					background-color: rgb(83, 83, 83);
+				}
+				
+				&[href*="twitter.com"]::before {
+					content: "\f099";
+				}
+
+				&[href*="instagram.com"]::before {
+					content: "\f16d";
+				}
+			}
+		}
 	}
 </style>

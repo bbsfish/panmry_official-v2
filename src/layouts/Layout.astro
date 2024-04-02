@@ -1,4 +1,5 @@
 ---
+import "the-new-css-reset";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
@@ -27,24 +28,27 @@ const { title } = Astro.props;
     </body>
 </html>
 
-<style is:global type="scss">
-    @use "../styles/vars.scss" as vars;
+<style is:global lang="scss">
+    @use "@/styles/mediaquery" as mq;
     @import url(http://fonts.googleapis.com/css?family=Dancing+Script:700);
     @import url(https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap);
     @import url("https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap");
+    @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css");
 
     :root {
-        --lightgray: rgb(94, 94, 94);
-        --lightblack: rgb(40, 40, 40);
-        --darkblack: #222;
-        --white: aliceblue;
-        --h-base-color: rgb(119, 119, 119);
-        --h-nav-list-active: rgb(254, 1, 92);
-        --h-nav-bg: rgb(40, 40, 40);
-        --m-header-main: rgb(162, 162, 162);
-        --m-tmlist-pg-active: rgb(96, 96, 96);
-        --m-bgcolor-1: #222;
-        --base-white: aliceblue;
+        // Color Codes
+        --black: rgb(40, 40, 40);
+        --black-2: rgb(94, 94, 94);
+        --white: rgb(240, 248, 255);
+        --white-2: rgb(162, 162, 162);
+        --accent: rgb(254, 1, 92);
+        --distinction: rgb(24, 24, 24);
+
+        // Transition Options
+        --trs-duration: 0.6s;
+
+        // Other Options
+        --screen-max-width: 1600px;
     }
 
     * {
@@ -54,59 +58,38 @@ const { title } = Astro.props;
         font-size: 16px;
     }
 
-    li {
-        text-decoration: none;
-        list-style-type: none;
-    }
-
-    a {
-        text-decoration: none;
-        list-style-type: none;
-        color: white;
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    p,
-    time,
-    li {
-        color: vars.$fc("dark");
-        margin: 0;
-        padding: 0;
-    }
-
-    button {
-        /* button reset */
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        outline: none;
-        padding: 0;
-        appearance: none;
-    }
-
     body {
         width: 100%;
         font-family: "Ubuntu Condensed", sans-serif, cursive;
-        background-color: rgb(40, 40, 40);
+        background-color: var(--black);
+
+        a,h1,h2,h3,h4,h5,p,time,li {
+            color: var(--white);
+            margin: 0;
+            padding: 0;
+        }
+
+        header, main, footer {
+            width: 100%;
+        }
+
+        main {
+            min-height: 1000px;
+            padding: 50px 0;
+        }
     }
 
-    .wrap {
-        overflow: hidden;
-    }
+    // button {
+    //     /* button reset */
+    //     background-color: transparent;
+    //     border: none;
+    //     cursor: pointer;
+    //     outline: none;
+    //     padding: 0;
+    //     appearance: none;
+    // }
 
-    img {
-        width: 150px;
-    }
-
-    main {
-        min-height: 90vh;
-    }
-
-    /* スクロールバー */
+    // スクロールバー
     ::-webkit-scrollbar {
         width: 12px;
         height: 12px;
