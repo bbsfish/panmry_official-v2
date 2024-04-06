@@ -1,0 +1,58 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import WorksItem from "@/components/works-parts/WorksItem.astro";
+import WatchMoreButton from "@/components/works-parts/WatchMoreButton.astro";
+import cms from "@/apis/cms.js";
+
+const works = await (async () => {
+	const items = (await cms.getItems("works"));
+	console.log('items', items);
+	return items.data.map((item) => {
+		const image = item.image;
+		return {
+			title: image.title,
+			description: image.description,
+			alt_text: image.altText,
+			image_src: cms.getAssetFullPath(image.path),
+		};
+	});
+})();
+---
+
+<Layout title="PANMry Works Official Homepage">
+	<div class="main">
+    <section id="works">
+      <h2>WORKS</h2>
+      <hr>
+      <div id="works-gallery">
+					{works.map((w) => (
+						<WorksItem title={w.title} description={w.description}
+							alt_text={w.alt_text} image_src={w.image_src} />
+					))}
+					<WatchMoreButton />
+			</div>
+    </section>
+  </div>
+</Layout>
+
+
+<style lang="scss">
+	.main {
+		& > section {
+			h2 {
+				width: 100%;
+				text-align: center;
+				font-size: 30px;
+				padding: 15px 0px;
+				color: var(--accent);
+			}
+		}
+	}
+
+	#works-gallery {
+		overflow-x: scroll;
+		white-space: nowrap;
+		vertical-align: middle;
+	}
+	
+</style>

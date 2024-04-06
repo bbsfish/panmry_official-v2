@@ -1,0 +1,42 @@
+---
+interface Props {
+  image_src: string,
+  title: string,
+  date: string,
+}
+const { image_src, title, date } = Astro.props;
+console.log({
+  image_src, title, date
+})
+---
+<a href="/" class="highlights-item">
+  <img src={image_src}>
+  <p>{title}</p><time>{date}</time>
+</a>
+
+<style lang="scss">
+  a {
+    display: inline-block;
+    height: 280px;
+    width: 160px;
+    text-align: center;
+    margin: 5px 5px;
+  }
+
+  p {
+    display: block;
+    height: 40px;
+    width: 150px;
+    padding: 0;
+    margin: 0 auto;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    text-align: center;
+  }
+
+  img {
+    width: 150px;
+    height: 190px;
+    margin: 0 auto;
+  }
+</style>

@@ -1,7 +1,7 @@
 ---
 import "the-new-css-reset";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
 
 interface Props {
     title: string;
@@ -75,7 +75,6 @@ const { title } = Astro.props;
 
         main {
             min-height: 1000px;
-            padding: 50px 0;
         }
     }
 

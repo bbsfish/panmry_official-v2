@@ -7,11 +7,11 @@ const __dirname = dirname(__filename);
 
 // https://astro.build/config
 export default defineConfig({
-    vite: {
-        resolve: {
-            alias: {
-                '@/': `${path.resolve(__dirname, 'src')}/`
-            }
-        }
-    }
+    // vite: {
+    //     resolve: {
+    //         alias: {
+    //             '@/*': [`${path.resolve(__dirname, 'src')}/*`]
+    //         }
+    //     }
+    // }
 });
