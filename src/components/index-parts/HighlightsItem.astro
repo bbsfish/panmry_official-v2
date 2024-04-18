@@ -1,42 +1,77 @@
 ---
+import cms from "@/apis/cms.js";
+
 interface Props {
-  image_src: string,
+  _id: string,
+  path: string,
   title: string,
   date: string,
+  link: string,
 }
-const { image_src, title, date } = Astro.props;
-console.log({
-  image_src, title, date
-})
+const { _id, path, title, date, link } = Astro.props;
+
+const imageSrc = await (async () => {
+  try {
+    return await cms.GetImage.fitToWidth(_id, 160 * 4, 190 * 4);
+  } catch (error) {
+    console.error(error);
+  }
+  return cms.getAssetFullPath(path);
+})();
+
+const titleLines = title.split('<br>');
+console.log('{ _id, path, title, date, link }', { _id, path, title, date, link })
 ---
-<a href="/" class="highlights-item">
-  <img src={image_src}>
-  <p>{title}</p><time>{date}</time>
-</a>
+<div class="highlightsitem">
+  <a href={link??'/'} class="item">
+    <div class="item__image">
+      <img src={imageSrc}>
+    </div>
+    <div class="item__title">
+      {
+        titleLines.map((line) => (<p>{line}</p>))
+      }
+    </div>
+    <time class="item__time">{date}</time>
+  </a>
+</div>
 
 <style lang="scss">
-  a {
-    display: inline-block;
-    height: 280px;
+  .highlightsitem {
+    display: table-cell;
+    vertical-align: top;
     width: 160px;
-    text-align: center;
-    margin: 5px 5px;
-  }
+    .item {
+      display: block;
+      margin: 0 1rem;
 
-  p {
-    display: block;
-    height: 40px;
-    width: 150px;
-    padding: 0;
-    margin: 0 auto;
-    word-break: break-all;
-    overflow-wrap: break-word;
-    text-align: center;
-  }
+      &__image {
+        width: 160px;
+        height: 210px;
+        overflow: hidden;
+        display: table;
+        position: relative;
+        img {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          margin: auto;
+          width: 100%;
+          height: auto;
+        }
+      }
 
-  img {
-    width: 150px;
-    height: 190px;
-    margin: 0 auto;
+      &__title {
+        display: block;
+        margin: 1rem 0;
+        min-height: 3rem;
+      }
+
+      &__time {
+        display: block;
+      }
+    }
   }
 </style>

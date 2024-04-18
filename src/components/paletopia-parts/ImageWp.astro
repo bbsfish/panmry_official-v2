@@ -1,0 +1,18 @@
+---
+interface Props {
+	src: string,
+	w?: string,
+	h?: string,
+	max_w?: string,
+	max_h?: string,
+}
+
+const { src, w = '100%', h = '100%', max_w = 'none', max_h = 'none' } = Astro.props;
+---
+
+<img src={src} style=`
+	width: ${w};
+	max-width: ${max_w};
+	height: ${h};
+	max-height: ${max_h};
+` />

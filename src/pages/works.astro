@@ -1,42 +1,227 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import WorksItem from "@/components/works-parts/WorksItem.astro";
-import WatchMoreButton from "@/components/works-parts/WatchMoreButton.astro";
-import cms from "@/apis/cms.js";
-
-const works = await (async () => {
-	const items = (await cms.getItems("works"));
-	console.log('items', items);
-	return items.data.map((item) => {
-		const image = item.image;
-		return {
-			title: image.title,
-			description: image.description,
-			alt_text: image.altText,
-			image_src: cms.getAssetFullPath(image.path),
-		};
-	});
-})();
 ---
 
-<Layout title="PANMry Works Official Homepage">
+<Layout title="PANMry Works Official Homepage" page="works">
 	<div class="main">
     <section id="works">
       <h2>WORKS</h2>
       <hr>
-      <div id="works-gallery">
-					{works.map((w) => (
-						<WorksItem title={w.title} description={w.description}
-							alt_text={w.alt_text} image_src={w.image_src} />
-					))}
-					<WatchMoreButton />
+      <div id="gallery">
 			</div>
     </section>
   </div>
 </Layout>
 
+<template id="gallery-item-tamplate">
+	<li class="gallery-item">
+		<div class="gallery-item__frame">
+			<div class="gallery-item__frame__wrapper">
+				<img class="gallery-item__frame__wrapper__image" src="" alt="">
+			</div>
+		</div>
+		<div class="gallery-item__label">
+			<p class="gallery-item__label__title"></p>
+		</div>
+	</li>
+</template>
+
+<template id="gallery-watchmore-template">
+	<li class="watchmore">
+		<div class="watchmore__wrapper">
+			<button id="watchmore" class="watchmore__wrapper__button">
+				Watch More
+			</button>
+		</div>
+	</li>
+</template>
+
+<template id="gallery-item-popup-template">
+	<div class="popup show">
+		<div class="popup__nav">
+			<div class="popup__nav__close">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+			</div>
+			<div class="popup__nav__title">
+				title
+			</div>
+		</div>
+		<div class="popup__body">
+			<div class="popup__body__message">
+				<p class="popup__body__message__text">hello</p>
+			</div>
+		</div>
+		<div class="popup__footer">
+			<button class="popup__footer__close">Close</button>
+		</div>
+	</div>
+</template>
+
+
+<script>
+	// Client Side Scripts
+
+	import cms from "@/apis/cms.js";
+	let page = 0; // cms skip scale
+
+	/**
+	 * Retrieve gallery items from CMS,
+	 * generate DOM from template, and add to parent
+	 * @return {Integer} total
+	 */
+	async function fillGalleryItems() {
+		const items = (await cms.getItems("works", page*5, 5));
+		const total = items.meta.total;
+
+		const parent = document.querySelector("#gallery");
+		const template = document.querySelector("#gallery-item-tamplate");
+		for (const item of items.data) {
+			const {
+				title, description, altText, path,
+				height, width, _id
+			} = item.image;
+
+			const imageSrc = await (async () => {
+				try {
+					if (height > 1920) return await cms.GetImage.fitToHeight(_id, 1920);
+					else if (width > 1080) return await cms.GetImage.fitToWidth(_id, 1080);
+				} catch (error) {
+					console.error('Error on getting image source', error);
+				}
+				return await cms.getAssetFullPath(path);
+			})();
+
+			// console.log("item", { title, description, altText, path,
+			// 	height, width, _id }, imageSrc);
+			
+			const clone = template.content.cloneNode(true);
+			const inner = clone.querySelector('.gallery-item');
+			(() => {
+				const element = inner.querySelector(".gallery-item__frame__wrapper__image");
+				element.src = imageSrc;
+				element.alt = altText;
+			})();
+			(() => {
+				const element = inner.querySelector(".gallery-item__label__title");
+				element.innerText = title;
+			})();
+
+			// Popup Event
+			(() => {
+				inner.addEventListener('click', (e) => {
+					parent.dispatchEvent(
+						new CustomEvent('openpopup', {
+							detail: { title, message: description },
+						})
+					);
+				});
+			})();
+
+			parent.appendChild(clone);
+		}
+		page++;
+		return total; // Total contents amount having cms
+	}
+
+	/**
+	 * Add or remove WatchMore buttons
+	 */
+	const Watchmore = (() => {
+		const parent = document.querySelector("#gallery");
+
+		const setup = () => {
+			if (parent.querySelector(".watchmore")) return;
+
+			const template = document.querySelector("#gallery-watchmore-template");
+			const clone = template.content.cloneNode(true);
+			clone.querySelector(".watchmore__wrapper__button")
+				.addEventListener("click", setupGallery);
+			parent.appendChild(clone);
+		}
+
+		const remove = () => {
+			const target = parent.querySelector(".watchmore");
+			if (!target) return;
+			target.remove();
+			// target.removeEventListener("click", setupGallery);
+		}
+
+		return { setup, remove };
+	})();
+
+	/**
+	 * Automatically insert Gallery items and position WatchMore buttons.
+	 * Starts when the page is first loaded or,
+	 * when the WatchMore button is pressed.
+	 */
+	async function setupGallery() {
+		Watchmore.remove();
+		const total = await fillGalleryItems();
+		if (Math.ceil(total/10) <= page) return;
+		Watchmore.setup();
+	}
+
+	/**
+	 * 
+	 */
+	const setupPopup = () => {
+		if (document.querySelector(".popup")) return;
+		const parent = document.querySelector("#gallery");
+		parent.addEventListener('openpopup', create);
+		parent.addEventListener('closepopup', destroy);
+
+		function create(e) {
+			const { title, message } = e.detail;
+			const template = document.querySelector("#gallery-item-popup-template");
+			const clone = template.content.cloneNode(true);
+			const inner = clone.querySelector('.popup');
+			inner.querySelector('.popup__nav__title').innerText = title;
+			inner.querySelector('.popup__body__message__text').innerText = message;
+			inner.querySelector(".popup__nav__close")
+				.addEventListener("click", closePopup);
+			inner.querySelector(".popup__footer__close")
+				.addEventListener("click", closePopup);
+			document.body.appendChild(clone);
+		}
+
+		function destroy(e) {
+			const target = document.querySelector('.popup');
+			target.classList.remove('show');
+			target.classList.add('hide');
+			setInterval(() => {
+				target.remove();
+				target.querySelector(".popup__nav__close").removeEventListener('click', closePopup);
+				target.querySelector(".popup__footer__close").removeEventListener('click', closePopup);
+			}, 600);
+		}
+
+		function closePopup(e) {
+			parent.dispatchEvent(new CustomEvent('closepopup'));
+		}
+	};
+
+	async function windowOnLoad() {
+		// browser check
+		if (!("content" in document.createElement("template"))) {
+			console.error("This browser is not supported");
+			return;
+		}
+
+		// Initial Setup
+		await setupGallery();
+		setupPopup();
+	}
+
+	window.addEventListener('DOMContentLoaded', windowOnLoad);
+</script>
+
+<script>
+	import { ancherSmoothScroll } from '@/scripts/scroll.js';
+	window.addEventListener('DOMContentLoaded', ancherSmoothScroll);
+</script>
 
 <style lang="scss">
+  @use "@/styles/mediaquery" as mq;
 	.main {
 		& > section {
 			h2 {
@@ -45,14 +230,169 @@ const works = await (async () => {
 				font-size: 30px;
 				padding: 15px 0px;
 				color: var(--accent);
+				font-weight: bold;
 			}
 		}
 	}
 
-	#works-gallery {
+	#gallery {
+		$w: 318px;
+		$h: 380px;
+
+		width: 100%;
+		height: 60vh;
+
 		overflow-x: scroll;
 		white-space: nowrap;
-		vertical-align: middle;
+
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+		padding: 4rem 0;
+
+		.gallery-item {
+			display: block;
+			list-style: none;
+			position: relative;
+			height: 100%;
+			width: $w;
+
+			&:first-child {
+				margin-left: 4rem;
+			}
+
+			&__frame {
+				height: 100%;
+				width: calc($w - 20px);
+				padding: 0 10px;
+				display: table;
+
+				&__wrapper {
+					display: table-cell;
+					vertical-align: middle;
+					text-align: center;
+
+					&__image {
+						box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
+						max-height: $h;
+						&:hover {
+							cursor: pointer;
+						}
+					}
+				}
+			}
+
+			&__label {
+				position: absolute;
+				display: block;
+				width: $w;
+				bottom: 0;
+				text-align: center;
+				&__title {
+					display: inline-block;
+					padding: 1px 24px;
+					background-color: var(--white);
+					color: var(--black);
+				}
+			}
+		}
+
+		.watchmore {
+			display: block;
+
+			&__wrapper {
+				width: 100%;
+				margin-right: 4rem;
+				&__button {
+					padding: 32px 24px;
+          border: 1px solid var(--white);
+          border-radius: 8px;
+
+          &:hover {
+						color: var(--white-2);
+            border: 1px solid var(--white-2);
+            transition: var(--trs-duration);
+						cursor: pointer;
+
+            &::after {
+              color: var(--white-2);
+              content: ">>";
+            }
+          }
+				}
+			}
+		}
+	}
+
+	.popup {
+		border-radius: .6rem;
+		padding: 1rem;
+		transition: var(--trs-duration);
+		&.show {
+			position: fixed;
+			background-color: var(--white);
+			opacity: .9;
+			top: 30%;
+			left: 30%;
+			right: 30%;
+			@include mq.break(mb) {
+				left: 10px;
+				right: 10px;
+			}
+		}
+		&.hide {
+			opacity: 0;
+			left: 50%;
+			right: 50%;
+			* {
+				opacity: 0;
+				left: 50%;
+				right: 50%;
+			}
+		}
+		&__nav {
+			display: flex;
+			gap: 1rem;
+			align-items: center;
+			&__close {
+				svg {
+					width: 1.5rem;
+				}
+				&:hover {
+					cursor: pointer;
+				}
+			}
+			&__title {
+				font-size: 1.6rem;
+				display: inline-block;
+				width: 100%;
+			}
+		}
+		&__body {
+			margin: 1rem 0;
+			&__message {
+				* {
+					color: var(--black);
+					font-size: 1.4rem;
+				}
+			}
+		}
+		&__footer {
+			text-align: right;
+			&__close {
+				font-size: 1.6rem;
+				background-color: var(--black);
+				color: var(--white);
+				padding: .3rem .6rem;
+				border-radius: .3rem;
+				box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
+				&:hover {
+					cursor: pointer;
+					color: var(--accent);
+					box-shadow: 0 20px 25px 0 rgba(0, 0, 0, .5);
+				}
+			}
+		}
 	}
 	
 </style>

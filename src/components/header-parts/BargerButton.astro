@@ -1,30 +1,54 @@
 ---
 ---
 <div class="barger-button">
-    <label id="button"><span></span></label>
+    <label class="barger-button__button" id="button">
+        <span class="barger-button__button__staple"></span>
+    </label>
 </div>
 
 <script>
-    let bargerStatus = {
-        flag: false,
-        toggle: () => {
-            bargerStatus.flag = !bargerStatus.flag;
+    function handlerOnLoad() {
+        const bargerclose = new CustomEvent('bargerclose');
+        const bargeropen = new CustomEvent('bargeropen');
+
+        /** @type {boolean} バーガーメニューの開/閉状態 */
+        let state = false;
+        const button = document.querySelector("#button");
+        const menu = document.querySelector("#header-menu");
+
+        button.addEventListener('bargeropen', () => {
+            if (state === false) {
+                menu.classList.add("panelactive");
+                document.addEventListener('click', outerClick);
+                state = true;
+            }
+        });
+
+        button.addEventListener('bargerclose', () => {
+            if (state === true) {
+                menu.classList.remove("panelactive");
+                document.removeEventListener('click', outerClick);
+                state = false;
+            }
+        });
+
+        button.addEventListener('click', () => {
+            if (state === true) button.dispatchEvent(bargerclose);
+            else button.dispatchEvent(bargeropen);
+        });
+
+        const outerClick = (e) => {
+            if (e.target.closest('#button') === null) {
+                const closeEvent = new CustomEvent('bargerclose');
+                menu.classList.remove("panelactive");
+                button.dispatchEvent(closeEvent);
+            }
         }
+
+        button.addEventListener('scrolldown', outerClick);
     }
-    const button = document.querySelector("#button");
-    const menu = document.querySelector("#header-menu");
-    button.addEventListener("click", (e) => {
-        bargerStatus = !bargerStatus;
-        if (bargerStatus) menu.classList.remove("panelactive");
-        else menu.classList.add("panelactive");
-    }, false);
-    document.addEventListener('click', (e) => {
-        if(!e.target.closest('#button')) {
-            //ここに外側をクリックしたときの処理
-        } else {
-            //ここに内側をクリックしたときの処理
-        }
-    });
+
+    document.addEventListener('DOMContentLoaded', handlerOnLoad);
 </script>
 
 <style lang="scss">
@@ -35,11 +59,11 @@
             width: 100%;
             height: var(--header-h);
             background-color: var(--distinction);
-            position: absolute;
+            position: fixed;
             z-index: 5000;
 
-            label {
-                position: fixed;
+            &__button {
+                position: absolute;
                 z-index: 6000;
                 top: 4px;
                 right: 10px;
@@ -50,9 +74,8 @@
                 align-items: center;
                 transition: 0.5s ease;
 
-                span, span:before, span:after {
+                &__staple, &__staple:before, &__staple:after {
                     background-color: var(--white);
-                    position: fixed;
                     content: "";
                     display: block;
                     height: 4px;
@@ -61,11 +84,11 @@
                     position: absolute;
                 }
 
-                span:before {
+                &__staple:before {
                     bottom: 8px;
                 }
 
-                span:after {
+                &__staple:after {
                     top: 8px;
                 }
             }

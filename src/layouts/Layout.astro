@@ -4,10 +4,11 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 
 interface Props {
-    title: string;
+    title: string,
+    page: string,
 }
 
-const { title } = Astro.props;
+const { title, page } = Astro.props;
 ---
 
 <!doctype html>
@@ -22,7 +23,7 @@ const { title } = Astro.props;
         <title>{title}</title>
     </head>
     <body>
-        <header><Header></Header></header>
+        <header><Header page={page}></Header></header>
         <main><slot /></main>
         <footer><Footer></Footer></footer>
     </body>
@@ -30,8 +31,8 @@ const { title } = Astro.props;
 
 <style is:global lang="scss">
     @use "@/styles/mediaquery" as mq;
-    @import url(http://fonts.googleapis.com/css?family=Dancing+Script:700);
-    @import url(https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap);
+    @import url("http://fonts.googleapis.com/css?family=Dancing+Script:700");
+    @import url("https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap");
     @import url("https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap");
     @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css");
 
@@ -48,57 +49,60 @@ const { title } = Astro.props;
         --trs-duration: 0.6s;
 
         // Other Options
-        --screen-max-width: 1600px;
+        --screen-max-width: 1920px;
+        --margin-rate: 0.8;
+        --margin-percentage: 80%;
     }
 
     * {
         margin: 0;
         padding: 0;
         box-sizing: content-box;
+    }
+
+    html {
         font-size: 16px;
-    }
 
-    body {
-        width: 100%;
-        font-family: "Ubuntu Condensed", sans-serif, cursive;
-        background-color: var(--black);
-
-        a,h1,h2,h3,h4,h5,p,time,li {
-            color: var(--white);
-            margin: 0;
-            padding: 0;
-        }
-
-        header, main, footer {
+        body {
             width: 100%;
+            font-family: "Ubuntu Condensed", sans-serif, cursive;
+            background-color: var(--black);
+
+            a,h1,h2,h3,h4,h5,p,time,li {
+                color: var(--white);
+                margin: 0;
+                padding: 0;
+            }
+
+            header, main, footer {
+                width: 100%;
+            }
+
+            main {
+                @include mq.break(mb) {
+                    // モバイルではヘッダーがfixedなのでその高さ分の余白が必要
+                    padding-top: 50px;
+                }
+                
+
+                // スクロールバー
+                ::-webkit-scrollbar {
+                    width: 12px;
+                    height: 12px;
+                }
+                ::-webkit-scrollbar-track {
+                    background: rgb(94, 94, 94);
+                    border-radius: 10px;
+                }
+                ::-webkit-scrollbar-thumb {
+                    background: aliceblue;
+                    border-radius: 10px;
+                }
+            }
+
+            header, footer {
+                background-color: var(--distinction);
+            }
         }
-
-        main {
-            min-height: 1000px;
-        }
-    }
-
-    // button {
-    //     /* button reset */
-    //     background-color: transparent;
-    //     border: none;
-    //     cursor: pointer;
-    //     outline: none;
-    //     padding: 0;
-    //     appearance: none;
-    // }
-
-    // スクロールバー
-    ::-webkit-scrollbar {
-        width: 12px;
-        height: 12px;
-    }
-    ::-webkit-scrollbar-track {
-        background: rgb(94, 94, 94);
-        border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: aliceblue;
-        border-radius: 10px;
     }
 </style>

@@ -4,9 +4,11 @@
 <div class="footer">
 	<div id="menu">
 		<nav>
-			<h4>About</h4>
+			<h4>Pages</h4>
 			<ul>
-				<li><a rel="nofollow" href="./about.html#developpers">Contuct us</a></li>
+				<li><a href="/">Top</a></li>
+				<li><a href="/works">Works</a></li>
+				<li><a href="/about">About</a></li>
 			</ul>
 		</nav>
 		<nav>
@@ -29,6 +31,11 @@
 	.footer {
 		background-color: var(--distinction);
 		width: 100%;
+		@include mq.break(pc) {
+			width: var(--margin-percentage);
+			max-width: calc(var(--screen-max-width) * var(--margin-rate));
+			margin: 0 auto;
+		}
 		
 		* {
 			color: var(--white);
@@ -39,9 +46,6 @@
 		}
 
 		& > div {
-			@include mq.break(pc) {
-				width: 90vw;
-			}
 			max-width: var(--screen-max-width);
 			margin-left: auto;
 			margin-right: auto;

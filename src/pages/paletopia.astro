@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import ImageWp from "@/components/paletopia-parts/ImageWp.astro";
 import cms from "@/apis/cms.js";
 const kvURL = cms.getAssetFullPath("/2024/04/05/keyvisual_uid_660f7c4c38ca7.jpg");
 const BaseImage = cms.getAssetFullPath("/2024/04/05/baseicon_uid_660f7c4c27a76.jpg");
@@ -17,229 +18,299 @@ const news = await cms.getOrderedItems("paletopianews", "date", -1);
 const conceptarts = (await cms.getItems("paletopiaconceptarts"))
   .data.map((item) => cms.getAssetFullPath(item.image.path));
 ---
-<Layout title="Paletopia | PANMry Works Official Homepage">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+<Layout title="Paletopia | PANMry Works Official Homepage" page="paletopia">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+    integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	<div class="main">
-    <section class="m-sections" id="keyvisual">
+    <section id="keyvisual">
       <h2>Paletopia</h2>
-      <hr>
-      <img src={kvURL}>
+      <hr />
+      <div class="keyvisual__image">
+        <ImageWp src={kvURL} max_w="1200px" />
+      </div>
     </section>
-    <section class="m-sections" id="movies">
+    <section id="movies">
       <h2>Movies</h2>
-      <hr>
-      <div class="iframe-video">
-        <iframe width="640" height="360" src="https://www.youtube.com/embed/rcwdNF838vQ" title="『Paletopia』 ゲーム紹介動画"
+      <hr />
+      <div class="videos">
+        <iframe class="videos__content"
+          src="https://www.youtube.com/embed/rcwdNF838vQ"
+          title="『Paletopia』 ゲーム紹介動画"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen></iframe>
+          allowfullscreen>
+        </iframe>
       </div>
     </section>
-    <section class="m-sections" id="news">
+    <section id="news">
       <h2>News</h2>
-      <hr>
+      <hr />
       <ol>
-        {news.map((n) => <li><time>{n.date}</time><span>{n.title}</span></li>)}
+        {
+          news.map((n) => (
+            <li><time>{n.date}</time><span>{n.title}</span></li>
+          ))
+        }
       </ol>
     </section>
-    <section class="m-sections" id="conceptarts">
+    <section id="conceptarts">
       <h2>Concept Arts</h2>
-      <hr>
+      <hr />
       <div class="gallery">
-        {conceptarts.map((src) => <img src={src}>)}
+        <div class="gallery__contents">
+          {
+            conceptarts.map((src) => (
+              <ImageWp src={src} h="200px" w="auto" />
+            ))
+          }
+        </div>
       </div>
     </section>
-    <section class="m-sections" id="goods">
+    <section id="goods">
       <h2>Goods</h2>
-      <hr>
-      <a href="https://mikorush.theshop.jp/" target="_blank" class="linkbox">
-        <p class="linkbox-title">FF3E00 Powered by BASE</p>
-        <p class="linkbox-description">アートワークの販売</p>
-        <img src={BaseImage}>
-      </a>
+      <hr />
+      <div class="shoplinks">
+        <a href="https://mikorush.theshop.jp/" target="_blank" class="shoplink">
+          <p class="shoplink__title">FF3E00 Powered by BASE</p>
+          <p class="shoplink__description">アートワークの販売</p>
+          <div class="shoplink__logo">
+            <ImageWp src={BaseImage} max_w="100px" max_h="100px" />
+          </div>
+        </a>
+      </div>
     </section>
-    <section class="m-sections" id="members">
+    <section id="members">
       <h2>Members</h2>
-      <hr>
-      <ul class="windows">
-        {members.map((p) => <li><p>{p.position}</p><p>{p.name}</p><img src={p.icon}></li>)}
-      </ul>
+      <hr />
+      <div class="members">
+        <ul class="profiles">
+          {
+            members.map((p) => (
+              <li class="profile">
+                <span class="profile__position">{p.position}</span><br />
+                <span class="profile__name">{p.name}</span>
+                <div class="profile__icon">
+                  <ImageWp src={p.icon} max_w="100px" max_h="100px" />
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </section>
-    <section class="m-sections" id="sns">
+    <section id="sns">
       <h2>SNS</h2>
-      <hr>
-      <!-- <ul class="follow-me">
-        <li><a href="https://twitter.com/MIKORUSH2001" id="twttr"></a></li>
-        <li><a href="https://www.instagram.com/mkrs.2001/" id="insta"></a></li>
-      </ul> -->
+      <hr />
       <ul class="snsbtniti2">
-        <li><a href="https://twitter.com/MIKORUSH2001" class="flowbtn18 fl_tw2"><i class="fab fa-twitter"></i>
+        <li>
+          <a href="https://twitter.com/MIKORUSH2001" class="flowbtn18 fl_tw2">
+            <i class="fab fa-twitter"></i>
             <div>Twitter</div>
-          </a></li>
-        <li><a href="https://www.instagram.com/mkrs.2001/" class="flowbtn18 insta_btn2"><i class="fab fa-instagram"></i>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/mkrs.2001/" class="flowbtn18 insta_btn2">
+            <i class="fab fa-instagram"></i>
             <div>Instagram</div>
-          </a></li>
+          </a>
+        </li>
       </ul>
     </section>
   </div>
 </Layout>
 
-<style>
-  section {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 40px;
-    margin-bottom: 40px;
-  }
+<script>
+	import { ancherSmoothScroll } from '@/scripts/scroll.js';
+	window.addEventListener('DOMContentLoaded', ancherSmoothScroll);
+</script>
 
-  section:last-child {
-    margin-bottom: 80px;
-  }
+<style lang="scss">
+  @use "@/styles/mediaquery" as mq;
 
-  h2 {
-    text-align: left;
-    font-size: 1.3rem;
-    padding: 15px 0;
-  }
+  .main {
+    & > section {
+      width: 100%;
+      margin: 1.8rem auto;
+      // @include mq.break(mb) {
+      //   width: 90%;
+      // }
 
-  hr {
-    width: 100% !important;
-    max-width: unset;
+      &:last-child {
+        margin-bottom: 3.6rem;
+      }
+
+      & > * {
+        width: var(--margin-percentage);
+        max-width: calc(var(--screen-max-width) * var(--margin-rate));
+        margin: 0 auto;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        padding: 1rem 0;
+      }
+
+      hr {
+        height: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        margin-bottom: 1rem;
+      }
+
+      ol li {
+        display: block;
+
+        time {
+          margin-right: 1rem;
+        }
+      }
+    }
   }
 
   /* Keyvisual */
-  section#keyvisual {
-    width: calc(100vw - calc(100vw - 100%));
+  .keyvisual__image {
     text-align: center;
-    height: max-content;
+    width: 100% !important;
   }
-
-  section#keyvisual img {
-    width: 100%;
-    max-width: 900px;
-    height: auto;
-  }
-
-  section#keyvisual h2,
-  section#keyvisual hr {
-    width: 80% !important;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
+  
   /* Video */
-  div.iframe-video {
-    aspect-ratio: 16 / 9;
+  .videos {
     text-align: center;
-  }
+    width: 100% !important;
 
-  div.iframe-video iframe {
-    width: 100%;
-    max-width: 900px;
-    height: 100%;
-    display: block;
-    margin: 0 auto;
-  }
-
-  /* News */
-  section#news ol li {
-    display: block;
-  }
-
-  section#news span {
-    color: var(--white);
-    margin-left: 1rem;
+    &__content {
+      // width="640" height="360"
+      width: 100%;
+      max-width: 640px;
+      height: auto;
+      aspect-ratio: 16 / 9;
+    }
   }
 
   /* Concept Arts */
-  div.gallery {
-    display: flex;
-    justify-content: space-between;
-    overflow-x: scroll;
-    padding: 0 5px;
-    scrollbar-width: 5px;
-  }
+  .gallery {
+    max-width: 1143px !important;
+    box-shadow: inset 20px 0 15px 0 rgba(0, 0, 0, 0.8),
+      inset -20px 0 15px 0 rgba(0, 0, 0, 0.8);
+    // scrollbar-width: 5px;
+    text-align: center;
 
-  div.gallery img {
-    width: 30%;
-    min-width: 200px;
-    max-width: 500px;
-    margin: 0 15px 15px 15px;
+    &__contents {
+      display: flex;
+      overflow-x: scroll;
+      padding: 1rem 3rem;
+      gap: 1rem;
+    }
   }
-
 
   /* Goods */
-  a.linkbox {
-    border: 1px solid var(--white);
-    border-radius: 4px;
-    padding: 10px 15px;
-    display: block;
-    position: relative;
-    min-height: calc(100px - 20px);
-  }
+  .shoplinks {
+    width: 100%;
 
-  a.linkbox p:first-child {
-    margin-bottom: .6rem;
-    display: block;
-    width: calc(100% - 100px);
-  }
+    .shoplink {
+      border: 1px solid var(--white);
+      border-radius: 4px;
+      padding: 10px 15px;
+      display: block;
+      position: relative;
+      min-height: calc(100px - 20px);
+      &:hover {
+        border: 1px solid var(--black-2);
+        color: var(--black-2);
+        transition: var(--trs-duration);
+      }
 
-  a.linkbox p:nth-child(2) {
-    color: var(--white);
-    font-weight: bold;
-    font-size: .9rem;
-    display: block;
-    width: calc(100% - 100px);
-  }
+      &__title {
+        margin-bottom: .6rem;
+        display: block;
+        width: calc(100% - 100px);
+      }
 
-  a.linkbox img {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    top: 0;
-    right: 0;
-    border-radius: 4px;
-  }
+      &__description {
+        color: var(--white);
+        font-weight: bold;
+        font-size: .9rem;
+        display: block;
+        width: calc(100% - 100px);
+      }
 
-  a.linkbox:hover {
-    border: 1px solid var(--black-2);
-    color: var(--black-2);
-    transition: var(--trs-duration);
+      &__logo {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        top: 0;
+        right: 0;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+    }
   }
 
   /* Members */
-  ul.windows {
-    display: flex;
-    justify-content: space-between;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  .members {
+    .profiles {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      @include mq.break(mb) {
+        flex-flow: column;
+      }
 
-  ul.windows li {
-    width: 130px;
-    text-align: center;
-    display: inline-block;
-  }
+      .profile {
+        text-align: center;
 
-  ul.windows p:first-child {
-    display: block;
-    width: 100%;
-    font-size: .65rem;
-    word-break: keep-all;
-  }
+        &__name {
+          font-size: 1.2rem;
+        }
 
-  ul.windows p:nth-child(2) {
-    display: block;
-    width: 100%;
-    font-size: .9rem;
-  }
+        &__icon {
+          width: 100px;
+          overflow: hidden;
+          border-radius: 50%;
+          margin: 1rem auto;
+        }
 
-  ul.windows li img {
-    width: 100px;
+        @include mq.break(mb) {
+          $iconSize: 100px; // = アイコン画像の高さ
+          height: $iconSize;
+          position: relative;
+          text-align: left;
+          border-bottom: 1px solid var(--white-2);
+          padding: 1rem;
+
+          &:last-child {
+            border-bottom: 0;
+          }
+
+          &__icon {
+            width: $iconSize;
+            height: $iconSize;
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            margin: 0;
+          }
+
+          &__position {
+            position: absolute;
+            top: 25%;
+            left: calc($iconSize + 1.5rem);
+          }
+
+          &__name {
+            width: 50%;
+            position: absolute;
+            top: 50%;
+            left: calc($iconSize + 1.5rem);
+            padding-left: 2rem;
+          }
+        }
+      }
+    }
   }
 </style>
+
 <style>
    /* SNS follow icon */
    a.flowbtn18 {

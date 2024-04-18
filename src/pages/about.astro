@@ -1,0 +1,52 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import HTMLFrame from '@/components/HTMLFrame.astro';
+import cms from "@/apis/cms.js";
+
+const about = (await cms.getItem("about"));
+console.log('about', about);
+---
+
+<Layout title="PANMry Works Official Homepage" page="about">
+	<div class="main">
+    <section id="about">
+      <h2>ABOUT</h2>
+      <hr>
+			<section class="about-wrapper">
+				<HTMLFrame text={about.content} />
+			</section>
+    </section>
+	</div>
+</Layout>
+
+<script>
+	import { ancherSmoothScroll, headerNavSmoothScroll } from '@/scripts/scroll.js';
+	window.addEventListener('DOMContentLoaded', ancherSmoothScroll);
+	document.addEventListener("DOMContentLoaded", headerNavSmoothScroll);
+</script>
+
+<style lang="scss">
+	.main {
+		width: var(--margin-percentage);
+		max-width: calc(var(--screen-max-width) * var(--margin-rate));
+		margin: 0 auto;
+		min-height: 80vh;
+
+		& > section {
+			max-width: 900px;
+			margin: 0 auto;
+			padding: 1rem 0;
+			
+			h2 {
+				width: 100%;
+				text-align: center;
+				font-size: 2rem;
+				padding: 15px 0px;
+				color: var(--accent);
+				font-weight: bold;
+			}
+		}
+
+
+	}
+</style>

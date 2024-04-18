@@ -1,6 +1,7 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import Keyvisual from "@/components/index-parts/Keyvisual.astro";
+import Layout from '@/layouts/Layout.astro';
+import HTMLFrame from '@/components/HTMLFrame.astro';
+import Keyvisual from '@/components/index-parts/Keyvisual.astro';
 import HighlightsItem from "@/components/index-parts/HighlightsItem.astro";
 import cms from "@/apis/cms.js";
 
@@ -10,36 +11,47 @@ const introduce = await cms.getItem("introduce");
 // Highlights
 const highlights = await (async () => {
 	const content = await cms.getItems("highlights");
-	return content.data.map((item) => {
-		return {
-			title: item.title,
-			date: item.date,
-			image_src: cms.getAssetFullPath(item.thumbnail.path),
-		};
-	});
+	return content.data.map((item) => ({
+		title: item.title,
+		date: item.date,
+		link: item.link,
+		_id: item.thumbnail._id,
+		path: item.thumbnail.path,
+	}));
 })();
-// console.log(highlights);
 ---
 
-<Layout title="PANMry Works Official Homepage">
+<Layout title="PANMry Works Official Homepage" page="index">
 	<div class="main">
 		<Keyvisual />
     <section id="intro">
 			<h2>INTRODUCE</h2>
 			<hr>
-      <p class="description" id="desc01">
-				{introduce.text}
-			</p>
+			<div class="introduce">
+				<HTMLFrame text={introduce.text} />
+			</div>
     </section>
     <section id="highlights">
 			<h2>HIGHLIGHTS</h2>
 			<hr>
-			<div class="img-list">
-				{highlights.map((item) => <HighlightsItem title={item.title} date={item.date} image_src={item.image_src} />)}
+			<div class="highlights">
+				<div class="highlights__items">
+					{
+						highlights.map((item) => (
+							<HighlightsItem title={item.title} date={item.date} path={item.path} _id={item._id} link={item.link} />
+						))
+					}
+				</div>
 			</div>
     </section>
   </div>
 </Layout>
+
+<script>
+	import { ancherSmoothScroll, headerNavSmoothScroll } from '@/scripts/scroll.js';
+	window.addEventListener('DOMContentLoaded', ancherSmoothScroll);
+	document.addEventListener("DOMContentLoaded", headerNavSmoothScroll);
+</script>
 
 <style lang="scss">
 	.main {
@@ -47,29 +59,34 @@ const highlights = await (async () => {
 			h2 {
 				width: 100%;
 				text-align: center;
-				font-size: 30px;
+				font-size: 2rem;
 				padding: 15px 0px;
 				color: var(--accent);
+				font-weight: bold;
 			}
 		}
 	}
 
-	.description {
-		text-align: center;
-		font-size: 18px;
+	.introduce {
+		width: var(--margin-percentage);
+		max-width: calc(var(--screen-max-width) * var(--margin-rate));
+		margin: 0 auto;
+		font-size: 1.4rem;
 		padding: 15px 0px;
 		color: rgb(177, 177, 177);
 	}
 
-	.img-list {
-		display: block;
-		height: 320px;
+	.highlights {
 		width: 100%;
-		white-space: nowrap;
-		overflow: scroll;
-		text-align: center;
-		overflow-y: scroll;
-		-ms-overflow-style: none;
-		scrollbar-width: none;
+		overflow-x: scroll;
+		&__items {
+			display: table;
+			height: 320px;
+			margin: 0 auto;
+			white-space: nowrap;
+			text-align: center;
+			-ms-overflow-style: none;
+			scrollbar-width: none;
+		}
 	}
 </style>

@@ -16,6 +16,9 @@
         height: 50px;
         position: absolute;
         z-index: 6000;
+        @include mq.break(mb) {
+            position: fixed;
+        }
         
         .cambas {
             width: 100%;

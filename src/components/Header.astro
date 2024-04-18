@@ -1,31 +1,80 @@
 ---
 import Logo from "./header-parts/Logo.astro";
 import BargerButton from "./header-parts/BargerButton.astro";
+
+interface Props {
+	page: string
+}
+
+const { page } = Astro.props;
+// console.log('Astro.props', Astro.props);
 ---
 
-<div class="header">
+<div class="header" id=`page-${page}`>
 	<Logo></Logo>
 	<div class="menu" id="header-menu">
 		<nav id="menu-main">
 			<ul>
-			  <!-- <a> class="h-nav-list-active" 付与でハイライト -->
-			  <li><a href="/#intro" class="active">intro</a></li>
-			  <li><a href="/#highlights">highlights</a></li>
-			  <li><a href="/works">works</a></li>
-			  <li><a href="/paletopia">paletopia</a></li>
+			  <li><a href="/#intro" class="header-menu-items">intro</a></li>
+			  <li><a href="/#highlights" class="header-menu-items">highlights</a></li>
+			  <li><a href="/works" class="header-menu-items">works</a></li>
+			  <li><a href="/paletopia" class="header-menu-items">paletopia</a></li>
 			</ul>
 		</nav>
 		<nav id="menu-sub">
 			<ul>
-			  <li><a href="./about.html">about</a></li>
+			  <li><a href="/about" class="header-menu-items">about</a></li>
 			</ul>
 		</nav>
 	</div>
 	<BargerButton></BargerButton>
 </div>
 
+<script>
+	// 今いるページを .header の ID から認識して、メニューを強調表示
+	function activateHeaderNav() {
+		const hash = window.location.hash;
+		const PageNameList = [ 'index#intro', 'index#highlights', 'works', 'paletopia', 'about' ];
+		const headerId = document.querySelector(".header").id;
+		const name = headerId.split('-').pop();
+		const index = (() => {
+			let idx = PageNameList.indexOf(name);
+			if (idx < 0) idx = PageNameList.indexOf(name + hash);
+			return idx;
+		})();
+		if (index < 0) return;
+
+		const items = document.querySelectorAll('.header-menu-items');
+		items.forEach((item, i) => {
+			if (index === i && !(item.classList.contains('active)'))) item.classList.add('active');
+			else item.classList.remove('active');
+		});
+	}
+
+	document.addEventListener("DOMContentLoaded", activateHeaderNav);
+
+	// ヘッダーのリンクが押されたときの処理
+	document.querySelector('.header').addEventListener('clickHeaderMenu', activateHeaderNav);
+
+	// スクロールアクション
+	let set_position = 0;
+	window.addEventListener('scroll', function () {
+		if (set_position < document.documentElement.scrollTop) {
+			document.querySelector('.barger-button')
+				.querySelector('#button').dispatchEvent(new CustomEvent('bargerclose'));
+			document.querySelector('.header').classList.add('hide');
+		} else {
+			document.querySelector('.barger-button')
+				.querySelector('#button').dispatchEvent(new CustomEvent('bargerclose'));
+			document.querySelector('.header').classList.remove('hide');
+		}
+		set_position = document.documentElement.scrollTop;
+	});
+
+</script>
+
 <style lang="scss">
-    @use "@/styles/mediaquery" as mq;
+	@use "@/styles/mediaquery" as mq;
 
 	.header {
 		--header-h: 50px;
@@ -43,9 +92,13 @@ import BargerButton from "./header-parts/BargerButton.astro";
 
 	@include mq.break(mb) {
 		.header {
+			position: fixed;
+			top: 0;
+			transition: all var(--trs-duration);
+
 			.menu {
 				padding: 0 2rem;
-				position: absolute;
+				position: fixed;
 				z-index: 10;
 				top: -250px;
 				background-color: var(--distinction);
@@ -54,6 +107,7 @@ import BargerButton from "./header-parts/BargerButton.astro";
 
 				&.panelactive {
 					top: var(--header-h);
+					box-shadow: 0 10vh 100vh 0 rgba(0, 0, 0, .8);
 				}
 
 				nav {
@@ -77,12 +131,19 @@ import BargerButton from "./header-parts/BargerButton.astro";
 				}
 			}
 		}
+
+		.header.hide {
+			top: -50px !important;
+		}
 	}
 
 	// PC
 	@include mq.break(pc) {
 		.header {
+			width: var(--margin-percentage);
+			max-width: calc(var(--screen-max-width) * var(--margin-rate));
 			height: var(--header-h);
+			margin: 0 auto;
 			color: var(--white);
 			position: relative;
 
