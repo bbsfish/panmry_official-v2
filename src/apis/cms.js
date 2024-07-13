@@ -6,41 +6,47 @@ const OPTIONS = {
   }
 };
 
-const logger = (label, content = null, extension = null) => {
-  if (extension) console.log("[apis/cms]", label, content, extension);
-  else if (content) console.log("[apis/cms]", label, content);
-  else console.log("[apis/cms]", label);
-}
+const logger = (() => {
+  const format = `[apis/cms]`;
+  const log = (...args) => console.log(format, ...args);
+  const error = (...args) => console.error(format, ...args);
+  return {
+    log, error,
+  };
+})();
 
 const request = (() => {
-  const _fetch = async (ep, opt) => {
+  const _fetch = async (endpoint, options) => {
     try {
-      logger(`fetch - ${opt.method}`, ep);
-      return await fetch(ep, opt);
+      logger.log(`fetch - ${options.method}`, endpoint);
+      return await fetch(endpoint, options);
     } catch (error) {
-      logger('@_fetch, error', error);
+      logger.error('@_fetch', error);
       throw error;
     }
   }
 
   const toJSON = async (endpoint, options = OPTIONS) => {
+    let data;
     try {
       const response = await _fetch(endpoint, options);
-      return await response.json();
+      // responseText = await response.text();
+      data = await response.json();
+      return data;
     } catch (error) {
-      logger('@toJSON, parse error', error);
+      logger.error('Error @toJSON', data, error);
       throw error;
     }
   }
 
   const toText = async (endpoint, options = OPTIONS) => {
+    let data;
     try {
       const response = await _fetch(endpoint, options);
-      const text = await response.text();
-      logger('@toText, response', text); // エラーを区別できないため表示
-      return text;
+      data = await response.text();
+      return data;
     } catch (error) {
-      logger('@toText, parse error', error);
+      logger.error('@toJSON', data, error);
       throw error;
     }
   }
