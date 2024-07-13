@@ -2,25 +2,54 @@
 import "the-new-css-reset";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import cms from "@/apis/cms.js";
+
+const pathToSiteImage = await ( async () => {
+    const { image } = await cms.getItem('headsiteimage');
+    const { path } = image;
+    const fullPath = cms.getAssetFullPath(path);
+    return fullPath;
+})();
+
+const siteLogo = await ( async () => {
+    const { image } = await cms.getItem('headsitelogo');
+    const { path, mime } = image;
+    const fullPath = cms.getAssetFullPath(path);
+    return {
+        path: fullPath,
+        mime,
+    };
+})();
 
 interface Props {
     title: string,
     page: string,
+    description: string,
+    isTopPage: boolean,
 }
 
-const { title, page } = Astro.props;
+const { title, page, description, isTopPage = false } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="ja">
-    <head>
+    <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/ fb# prefix属性: http://ogp.me/ns/ prefix属性#">
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- <meta name="description" content="" /> -->
         <meta name="viewport" content="width=device-width" />
-        <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
-        <meta name="generator" content={Astro.generator} />
+        <link rel="icon" type={siteLogo.mime} href={siteLogo.path} />
+        <link rel="favicon" type={siteLogo.mime} href={siteLogo.path} />
         <title>{title}</title>
+        <meta name="description" content={description} />
+
+        <!-- OGP -->
+        <meta property="og:url" content="https://panmryofficial.vercel.app/" />
+        <meta property="og:type" content={(isTopPage) ? 'website' : 'article'} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:site_name" content="PANMry Works" />
+        <meta property="og:image" content={pathToSiteImage} />
+        <meta name="generator" content={Astro.generator} />
         <meta name="google-site-verification" content="lPSJ-S74lZmxRcmzY7jF0YqExALGKNZiryl8gQNdMMw" />
     </head>
     <body>

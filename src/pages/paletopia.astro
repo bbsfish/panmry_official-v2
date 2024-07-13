@@ -18,7 +18,7 @@ const news = await cms.getOrderedItems("paletopianews", "date", -1);
 const conceptarts = (await cms.getItems("paletopiaconceptarts"))
   .data.map((item) => cms.getAssetFullPath(item.image.path));
 ---
-<Layout title="Paletopia | PANMry Works Official Homepage" page="paletopia">
+<Layout title="Paletopia" page="paletopia" isTopPage={false} description="PANMryが参加するインディーズゲーム「paletopia」の公式ホームページ。ゲームに関する最新情報やアートワークをお楽しみください。">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
     integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	<div class="main">
